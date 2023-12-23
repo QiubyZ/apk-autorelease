@@ -40,6 +40,17 @@ jobs:
               with:
                   name: ${{github.event.repository.name}}
                   path: ${{env.FILE_OUTPUT}}
+
+#konfigurasi Pembuatan Rilis dan Upload Rilis 
+            - name: Membuat Rilis
+              id: create_release
+              uses: actions/create-release@v1
+              with:
+                  tag_name: ${{ github.ref }}
+                  release_name: Release ${{ github.ref }}
+                  body: "Test Rilis"
+                  draft: false
+                  prerelease: false
                   
             - name: Upload File ${{env.FILE_OUTPUT}} ke Release
               uses: xresloader/upload-to-github-release@v1
@@ -47,6 +58,4 @@ jobs:
                   file: ${{env.FILE_OUTPUT}}
                   tag_name: "Release"
                   tags: true
-                  prerelease: true
                   verbose: true
-                  draft: true
