@@ -11,12 +11,5 @@ jobs:
         runs-on: ubuntu-latest
         permissions:
             contents: write
-    
     steps:
-          - name: Check Out Folder
-            uses: actions/checkout@v4
-          
-          - name: Membuat Teks
-            run: "echo 'Hello World' > ./test.txt"
-          
-          
+        - name: Test
