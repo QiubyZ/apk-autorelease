@@ -13,4 +13,6 @@ jobs:
             contents: write
             
         steps:
-            - name: Test
+            - name: Check Out
+              uses: actions/checkout@v4
+              
