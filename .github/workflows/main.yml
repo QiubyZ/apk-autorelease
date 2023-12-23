@@ -9,5 +9,14 @@ on:
 jobs:
     build:
         runs-on: ubuntu-latest
-        permission: write
-        
+        permissions:
+            contents: write
+    
+    steps:
+        - name: Check Out Folder
+          uses: actions/checkout@v4
+          
+        - name: Membuat Teks
+          run: "echo 'Hello World' > ./test.txt"
+          
+          
