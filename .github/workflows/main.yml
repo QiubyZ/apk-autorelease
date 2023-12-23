@@ -20,6 +20,7 @@ jobs:
         env:
             FILE_OUTPUT: "./teks"
             NAMA_REPO: ${{github.event.repository.name}}
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             
         #Langkah
         steps:
@@ -38,5 +39,12 @@ jobs:
               with:
                   name: ${{github.event.repository.name}}
                   path: ./txt
-                      
-              
+                  
+            - name: Upload File ${{env.FILE_OUTPUT}} ke Release
+              uses: xresloader/upload-to-github-release@v1
+              with:
+                  file: ${{env.FILE_OUTPUT}}
+                  tag_name: "Release"
+                  tags: true
+                  verbose: true
+                  draft: true
