@@ -15,4 +15,8 @@ jobs:
         steps:
             - name: Check Out
               uses: actions/checkout@v4
+            
+            - name: Membuat File
+              run: "echo 'Nete' > ./txt"
+              
               
