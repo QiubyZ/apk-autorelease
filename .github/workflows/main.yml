@@ -2,8 +2,7 @@ name: TestRelease
 
 on:
     push:
-        pull_request: branches: [ "main" ]
-        branches: [ "main" ]
+        branches: [ "main"]
     # Sequence of patterns matched against refs/tags
     tags:
     - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
@@ -14,7 +13,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
+        
+      - name: Print Variabel
+        run: ${{ github.repository }}
+        
       - name: Build project # This would actually build your project, using zip for an example artifact
         run: |
           zip --junk-paths my-artifact README.md
