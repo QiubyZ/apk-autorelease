@@ -47,5 +47,6 @@ jobs:
                   file: ${{env.FILE_OUTPUT}}
                   tag_name: "Release"
                   tags: true
+                  prerelease: true
                   verbose: true
                   draft: true
