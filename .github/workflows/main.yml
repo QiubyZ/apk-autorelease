@@ -9,6 +9,7 @@ on:
         branches: [ "main" ]
 
 #Tindakan yang akan dilkukan atau yang akan di kerjakan dalam workflow ini
+
 jobs:
     #Menetapkan mesin virtual untuk mengerjakan proses
     build:
@@ -30,7 +31,7 @@ jobs:
             - name: Membuat File
               run: "echo 'Hello World' > ${{env.FILE_OUTPUT}}"
             
-            - name: Mengambil Nama Repository
+            - name: Cuma cek Nama Repository
               run: echo ${{env.NAMA_REPO}}
             
             - name: Upload ke Artefak dengan nama dan file yang telah di tentukan
