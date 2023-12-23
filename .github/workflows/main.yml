@@ -18,7 +18,7 @@ jobs:
             
         #Mendefinisikan Global ENV Variabel, untuk 'nanti' Dipanggil ulang.
         env:
-            FILE_OUTPUT: "./teks"
+            FILE_OUTPUT: "./test.txt"
             NAMA_REPO: ${{github.event.repository.name}}
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             
@@ -28,7 +28,7 @@ jobs:
               uses: actions/checkout@v4
             
             - name: Membuat File
-              run: "echo 'Nete' > ${{env.FILE_OUTPUT}}"
+              run: "echo 'Hello World' > ${{env.FILE_OUTPUT}}"
             
             - name: Mengambil Nama Repository
               run: echo ${{env.NAMA_REPO}}
