@@ -18,5 +18,13 @@ jobs:
             
             - name: Membuat File
               run: "echo 'Nete' > ./txt"
+            
+            - name: Cek nama Repository
+              run: echo ${{github.event.repository.name}}
+#            - name: Upload ke Artefak
+#              uses: actions/upload-artifact@v3.1.3
+#              with:
+#                  name: ${{github.event.repository.name}}
+                  
               
               
