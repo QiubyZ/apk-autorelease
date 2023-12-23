@@ -1,32 +1,42 @@
+#Nama biasa
 name: TestRelease
 
+#Triger workflow (script ini) untuk berjalan ketika melakukan push dan pull_request ke dalam main branch
 on:
     push:
         branches: ["main"]
     pull_request:
         branches: [ "main" ]
 
+#Tindakan yang akan dilkukan atau yang akan di kerjakan dalam workflow ini
 jobs:
+    #Menetapkan mesin virtual untuk mengerjakan proses
     build:
         runs-on: ubuntu-latest
         permissions:
             contents: write
             
+        #Mendefinisikan Global ENV Variabel, untuk 'nanti' Dipanggil ulang.
+        env:
+            FILE_OUTPUT: "./teks"
+            NAMA_REPO: ${{github.event.repository.name}}
+            
+        #Langkah
         steps:
-            - name: Check Out
+            - name: Menyingkronkan Repository
               uses: actions/checkout@v4
             
             - name: Membuat File
               run: "echo 'Nete' > ./txt"
             
-            - name: Cek nama Repository
-              run: echo ${{github.event.repository.name}}
+            - name: Mengambil Nama Repository
+              run: echo ${{env.NAMA_REPO}}
             
-            - name: Upload ke Artefak
+            - name: Upload ke Artefak dengan nama dan file yang telah di tentukan
+            
               uses: actions/upload-artifact@v3.1.3
               with:
                   name: ${{github.event.repository.name}}
                   path: ./txt
                       
-              
               
