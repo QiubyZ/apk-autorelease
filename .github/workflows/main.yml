@@ -37,5 +37,5 @@ jobs:
           upload_url: ${{ steps.release-id.outputs.upload_url }}
           asset_path: ${{env.FILE_OUTPUT}}
           asset_name: ${{env.PROJECT_NAME}}-${{github.run_number}}.zip
-          asset-content-type: application/zip
+          asset_content_type: application/zip
 
