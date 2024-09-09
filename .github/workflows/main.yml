@@ -33,6 +33,8 @@ jobs:
           draft: false
           prerelease: false
 
+      - uses: actions/checkout@v4
+
       - name: Upload Release
         uses: actions/upload-release-asset@v1
         with:
