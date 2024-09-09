@@ -9,7 +9,6 @@ jobs:
     env:
       TAG: Release
       PROJECT_NAME: ${{github.event.repository.name}}
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       FILE_OUTPUT: ./dist
 
     runs-on: ubuntu-latest
