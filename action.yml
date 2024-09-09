@@ -9,7 +9,7 @@ inputs:
     default: "Aplikasi ini otomatis dirilis sesuai dengan Artefact"
     description: "Body Release"
 
-runs:
+steps:
   using: composite
   build:
     runs-on: ubuntu-latest
