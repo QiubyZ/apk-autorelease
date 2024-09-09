@@ -10,7 +10,6 @@ jobs:
       TAG: Release
       PROJECT_NAME: ${{github.event.repository.name}}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      FILE_OUTPUT: ./dist
 
     runs-on: ubuntu-latest
     steps:
@@ -20,13 +19,12 @@ jobs:
         uses: actions/upload-artifact@v3.1.3
         with:
           name: ${{env.PROJECT_NAME}}
-          path: ${{env.FILE_OUTPUT}}
 
       - name: Pembuatan Membuat Tag Rilis
         id: release-id
         uses: actions/create-release@v1
         with:
-          tag_name: v1
+          tag_name: "v${{github.run_number}}"
           release_name: ${{env.PROJECT_NAME}}
           draft: false
           prerelease: false
@@ -35,7 +33,7 @@ jobs:
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.release-id.outputs.upload_url }}
-          asset_path: ${{env.FILE_OUTPUT}}
+          #asset_path: ${{env.FILE_OUTPUT}}
           asset_name: ${{env.PROJECT_NAME}}-${{github.run_number}}.zip
           asset_content_type: application/zip
 
