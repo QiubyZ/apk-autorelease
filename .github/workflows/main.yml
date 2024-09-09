@@ -1,0 +1,41 @@
+name: Release Action
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  build:
+    env:
+      TAG: Release
+      PROJECT_NAME: ${{github.event.repository.name}}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      FILE_OUTPUT: ./dist
+
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Upload Ke dalam Artifact
+        uses: actions/upload-artifact@v3.1.3
+        with:
+          name: ${{env.PROJECT_NAME}}
+          path: ${{env.FILE_OUTPUT}}
+
+      - name: Pembuatan Membuat Tag Rilis
+        id: release-id
+        uses: actions/create-release@v1
+        with:
+          tag_name: "${{env.TAG}}-${{github.run_number}}"
+          release_name: ${{env.PROJECT_NAME}}
+          draft: false
+          prerelease: false
+
+      - name: Upload Release
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.release-id.outputs.upload_url }}
+          asset_path: ${{env.FILE_OUTPUT}}
+          asset_name: ${{env.PROJECT_NAME}}-${{github.run_number}}.zip
+          asset-content-type: application/zip
+

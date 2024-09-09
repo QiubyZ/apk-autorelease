@@ -1,6 +1,5 @@
 name: Android CI
 
-
 on:
   push:
     branches: [main]
@@ -11,7 +10,7 @@ inputs:
     description: "Body Release"
 
 runs:
-  uses: composite
+  using: composite
   build:
     runs-on: ubuntu-latest
     permissions:
