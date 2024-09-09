@@ -9,19 +9,23 @@ inputs:
     default: "Aplikasi ini otomatis dirilis sesuai dengan Artefact"
     description: "Body Release"
 
-steps:
+  gradle_cmd:
+    default: bash ./gradlew assembleDebug --stacktrace
+    description: "Build Apk with ${{gradle_cmd.default}}"
+ 
+env:
+  TAG: Release
+  PROJECT_NAME: ${{github.repository}}
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  FILE_OUTPUT: ./app/build/outputs/apk/debug/app-debug.apk
+ 
+
+jobs:
   using: composite
   build:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      
-    env:
-        TAG: Release
-        PROJECT_NAME: ${{github.event.repository.name}}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        FILE_OUTPUT: ./app/build/outputs/apk/debug/app-debug.apk
-        
     steps:
     - uses: actions/checkout@v4
 
@@ -35,8 +39,8 @@ steps:
     - name: memberikan Perizinan gradlew
       run: chmod +x gradlew
       
-    - name: Build debug Apk
-      run: bash ./gradlew assembleDebug --stacktrace
+    - name: ${{inputs.gradle.gradle_cmd.description}}
+      run: ${{inputs.gradle.gradle_cmd}}
     
 
     - name: Upload Ke dalam Artifact
@@ -56,9 +60,10 @@ steps:
           prerelease: false
              
     - name: Upload Release
+      needs: release-id
       uses: actions/upload-release-asset@v1
       with:
-        upload_url: ${{ steps.release-id.outputs.upload_url }}
+        upload_url: ${{steps.release-id.outputs.upload_url}}
         asset_path: ${{env.FILE_OUTPUT}}
         asset_name: ${{env.PROJECT_NAME}}-${{github.run_number}}.apk
         asset_content_type: application/vnd.android.package-archive
