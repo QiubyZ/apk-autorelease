@@ -18,9 +18,19 @@ To run this reusable script, you need to give permissions as in the example in t
 It's quite simple to use, 
 
 ```bash
+on:
+  push:
+    brances: [ main ]
+
+env:
+  GITHUB_ACTION: ${{secret.GITHUB_ACTION}}
+
 jobs:
-    call-workflow-passing-data:
-          uses: QiubyZ/ReleaseWorkflow/.github/workflows/main.yml@main
+  build:
+    runs-on: ubuntu-latest
+
+  steps:
+    uses: QiubyZ/apk-autorelease@v1
  ```
  
 or you can see how this script is called in the Repository that I have shown in the example [See examples here](https://github.com/QiubyZ/ExecutorService/blob/main/.github/workflows/main.yml)
