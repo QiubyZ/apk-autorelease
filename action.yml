@@ -1,4 +1,4 @@
-me: 'Android CI'
+name: 'Android CI'
 description: 'Build, test, and release Android apps'
 
 inputs:
@@ -34,7 +34,7 @@ runs:
     - name: Memberikan Perizinan gradlew
       run: chmod +x gradlew
       shell: bash
-      
+
     - name: Build APK
       run: bash ./gradlew ${{ inputs.gradle_cmd }} --stacktrace
       shell: bash
@@ -45,7 +45,7 @@ runs:
         name: ${{ github.repository }}
         path: ${{ inputs.file_output }}
 
-    - name: Create Release
+    - name: Create Release and Upload Asset
       id: release-id
       uses: actions/create-release@v1
       with:
@@ -54,10 +54,9 @@ runs:
         body: ${{ inputs.body_release }}
         draft: false
         prerelease: false
-
-    - name: Upload Release Asset
-      needs: release-id
-      uses: actions/upload-release-asset@v1
+      # Upload asset setelah release dibuat di step yang sama
+      continue-on-error: true # Lanjutkan jika upload asset gagal
+    - uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.release-id.outputs.upload_url }}
         asset_path: ${{ inputs.file_output }}
