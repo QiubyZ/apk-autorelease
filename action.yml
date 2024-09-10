@@ -38,14 +38,14 @@ runs:
       run: bash ./gradlew ${{ inputs.gradle_cmd }} --stacktrace
       shell: bash
 
-    - name: Melihat BERKAS REPOSITORY
-      run: bash ls -la
-      shell: bash
-
-    - name: MELIHAT BERKAS BUILD
-      run: bash ls -la ./app/build/outputs/apk/debug/
-      shell: bash
-
+    # - name: Melihat BERKAS REPOSITORY
+    #   run: bash ls -la
+    #   shell: bash
+    #
+    # - name: MELIHAT BERKAS BUILD
+    #   run: bash ls -la ./app/build/outputs/apk/debug/
+    #   shell: bash
+    #
     - name: Upload APK to Artifacts
       uses: actions/upload-artifact@v3.1.3
       with:
