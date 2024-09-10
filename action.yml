@@ -41,17 +41,15 @@ runs:
     - name: Upload APK to Artifacts
       uses: actions/upload-artifact@v3.1.3
       with:
-        #env: # Pindahkan env ke dalam with
-          #GITHUB_TOKEN: ${{ github.token }}
         name: ${{ github.repository }}
         path: ${{ inputs.file_output }}
 
     - name: Create Release and Upload Asset
       id: release-id
       uses: actions/create-release@v1
+      env: # Pindahkan env ke dalam with
+        GITHUB_TOKEN: ${{ github.token }}
       with:
-        #env: # Pindahkan env ke dalam with
-           #GITHUB_TOKEN: ${{ github.token }}
         tag_name: "${{ inputs.tag }}-${{ github.run_number }}"
         release_name: ${{ github.repository }}
         body: ${{ inputs.body_release }}
@@ -59,10 +57,8 @@ runs:
         prerelease: false
       # Upload asset setelah release dibuat di step yang sama
       continue-on-error: true # Lanjutkan jika upload asset gagal
-    - uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
+    - uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.release-id.outputs.upload_url }}
         asset_path: ${{ inputs.file_output }}
