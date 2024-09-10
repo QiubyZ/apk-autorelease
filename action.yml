@@ -1,9 +1,8 @@
- name: Android CI
+name: Android CI
 
 on:
   push:
     branches: [main]
-
 inputs:
   body_release:
     default: "Aplikasi ini otomatis dirilis sesuai dengan Artefact"
