@@ -33,9 +33,11 @@ runs:
 
     - name: Memberikan Perizinan gradlew
       run: chmod +x gradlew
+      shell: bash
       
     - name: Build APK
       run: bash ./gradlew ${{ inputs.gradle_cmd }} --stacktrace
+      shell: bash
 
     - name: Upload APK to Artifacts
       uses: actions/upload-artifact@v3.1.3
