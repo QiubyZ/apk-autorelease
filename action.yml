@@ -48,6 +48,8 @@ runs:
     - name: Create Release and Upload Asset
       id: release-id
       uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         tag_name: "${{ inputs.tag }}-${{ github.run_number }}"
         release_name: ${{ github.repository }}
