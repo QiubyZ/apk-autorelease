@@ -63,6 +63,7 @@ runs:
       continue-on-error: true # Lanjutkan jika upload asset gagal
     - uses: actions/upload-release-asset@v1
       with:
+        token: ${{ github.token }}
         upload_url: ${{ steps.release-id.outputs.upload_url }}
         asset_path: ${{ inputs.file_output }}
         asset_name: ${{ github.repository }}-${{ github.run_number }}.apk
