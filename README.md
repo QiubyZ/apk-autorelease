@@ -17,20 +17,25 @@ To run this reusable script, you need to give permissions as in the example in t
 # Guide
 It's quite simple to use, 
 
-```bash
+```yaml
+name: Android Release
+
 on:
   push:
-    brances: [ main ]
-
-env:
-  GITHUB_ACTION: ${{secret.GITHUB_ACTION}}
+    branches: [main]
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
 
-  steps:
-    uses: QiubyZ/apk-autorelease@v1
- ```
+      - uses: QiubyZ/apk-autorelease@v1
+        with:
+          gradle_cmd: 'assembleDebug' # this is will write apk filename /app-release-unsigned.apk
+          tag: 'Production'
+          body_release: 'Aplikasi versi produksi dirilis.'
+          file_output: './app/build/outputs/apk/debug/app-debug.apk'
+```
  
 or you can see how this script is called in the Repository that I have shown in the example [See examples here](https://github.com/QiubyZ/ExecutorService/blob/main/.github/workflows/main.yml)
