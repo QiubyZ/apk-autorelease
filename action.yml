@@ -41,7 +41,7 @@ runs:
     - name: Upload APK to Artifacts
       uses: actions/upload-artifact@v3.1.3
       with:
-        name: ${{ github.repository }}
+        name: ${{ github.event.repository.name }}
         path: ${{ inputs.file_output }}
 
     - name: Create Release and Upload Asset
