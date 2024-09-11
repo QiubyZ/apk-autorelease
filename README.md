@@ -38,4 +38,4 @@ jobs:
           file_output: './app/build/outputs/apk/debug/app-debug.apk'
 ```
  
-or you can see how this script is called in the Repository that I have shown in the example [See examples here](https://github.com/QiubyZ/ExecutorService/blob/main/.github/workflows/main.yml)
+or you can see how this script is called in the Repository that I have shown in the example [See examples here](https://github.com/QiubyZ/QZ-UserDict/blob/main/.github/workflows/android.yml)
