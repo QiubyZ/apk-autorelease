@@ -38,37 +38,29 @@ runs:
       run: bash ./gradlew ${{ inputs.gradle_cmd }} --stacktrace
       shell: bash
 
-    # - name: Melihat BERKAS REPOSITORY
-    #   run: bash ls -la
-    #   shell: bash
-    #
-    # - name: MELIHAT BERKAS BUILD
-    #   run: bash ls -la ./app/build/outputs/apk/debug/
-    #   shell: bash
-    #
-    # - name: Upload APK to Artifacts
-    #   uses: actions/upload-artifact@v3.1.3
-    #   with:
-    #     name: ${{ github.repository }}
-    #     path: ${{ inputs.file_output }}
-    #
-    # - name: Create Release and Upload Asset
-    #   id: release-id
-    #   uses: actions/create-release@v1
-    #   env: # Pindahkan env ke dalam with
-    #     GITHUB_TOKEN: ${{ github.token }}
-    #   with:
-    #     tag_name: "${{ inputs.tag }}-${{ github.run_number }}"
-    #     release_name: ${{ github.repository }}
-    #     body: ${{ inputs.body_release }}
-    #     draft: false
-    #     prerelease: false
-    #   # Upload asset setelah release dibuat di step yang sama
-    #   continue-on-error: true # Lanjutkan jika upload asset gagal
-    #
-    # - uses: actions/upload-release-asset@v1
-    #   with:
-    #     upload_url: ${{ steps.release-id.outputs.upload_url }}
-    #     asset_path: ${{ inputs.file_output }}
-    #     asset_name: ${{ github.repository }}-${{ github.run_number }}.apk
-    #     asset_content_type: application/vnd.android.package-archive
+    - name: Upload APK to Artifacts
+      uses: actions/upload-artifact@v3.1.3
+      with:
+        name: ${{ github.repository }}
+        path: ${{ inputs.file_output }}
+
+    - name: Create Release and Upload Asset
+      id: release-id
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+      with:
+        tag_name: "${{ inputs.tag }}-${{ github.run_number }}"
+        release_name: ${{ github.repository }}
+        body: ${{ inputs.body_release }}
+        draft: false
+        prerelease: false
+      # Upload asset setelah release dibuat di step yang sama
+      continue-on-error: true # Lanjutkan jika upload asset gagal
+
+    - uses: actions/upload-release-asset@v1
+      with:
+        upload_url: ${{ steps.release-id.outputs.upload_url }}
+        asset_path: ${{ inputs.file_output }}
+        asset_name: ${{ github.repository }}-${{ github.run_number }}.apk
+        asset_content_type: application/vnd.android.package-archive
