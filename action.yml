@@ -51,7 +51,7 @@ runs:
         GITHUB_TOKEN: ${{ github.token }}
       with:
         tag_name: "${{ inputs.tag }}-${{ github.run_number }}"
-        release_name: ${{ github.repository }}
+        release_name: ${{ github.event.repository.name }}
         body: ${{ inputs.body_release }}
         draft: false
         prerelease: false
@@ -62,5 +62,5 @@ runs:
       with:
         upload_url: ${{ steps.release-id.outputs.upload_url }}
         asset_path: ${{ inputs.file_output }}
-        asset_name: ${{ github.repository }}-${{ github.run_number }}.apk
+        asset_name: ${{ github.event.repository.name }}-${{ github.run_number }}.apk
         asset_content_type: application/vnd.android.package-archive
