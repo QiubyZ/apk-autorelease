@@ -67,3 +67,5 @@ runs:
         asset_path: ${{ inputs.file_output }}
         asset_name: ${{ github.event.repository.name }}-${{ github.run_number }}.apk
         asset_content_type: application/vnd.android.package-archive
+      continue-on-error: true
+
