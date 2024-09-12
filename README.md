@@ -32,7 +32,7 @@ jobs:
 
       - uses: QiubyZ/apk-autorelease@v1
         with:
-          gradle_cmd: 'assembleDebug' # this is will write apk filename /app-release-unsigned.apk
+          gradle_cmd: 'assembleDebug'
           tag: 'Production'
           body_release: 'Aplikasi versi produksi dirilis.'
           file_output: './app/build/outputs/apk/debug/app-debug.apk'
