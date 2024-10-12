@@ -18,38 +18,29 @@ jobs:
 
       - name: Check Directory
         run: ls -la
+
+      # ... (Langkah-langkah untuk membangun file ZIP Anda di direktori ./dist) 
+
       - name: Upload Ke dalam Artifact
-        uses: actions/upload-artifact@v3.1.3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{env.PROJECT_NAME}}
           path: ${{env.FILE_OUTPUT}}
 
-      - name: Pembuatan Membuat Tag Rilis
-        id: release-id
-        uses: actions/create-release@v1
+      - name: Dapatkan atau buat rilis
+        id: get_release
+        uses: ncipollo/release-action@v1
         with:
-          tag_name: "v${{github.run_number}}"
-          release_name: ${{env.PROJECT_NAME}}
+          allowUpdates: true # Izinkan pembaruan pada rilis yang sudah ada
+          tag: v1 # Gunakan tag "v1" secara konsisten
+          name: Release v1 # Nama rilis (bisa diubah sesuai keinginan)
           draft: false
           prerelease: false
 
-      - uses: actions/checkout@v4
-
-      # - name: Upload Release
-      #   uses: actions/upload-release-asset@v1
-      #   with:
-      #     upload_url: ${{ steps.release-id.outputs.upload_url }}
-      #     asset_path: ${{env.FILE_OUTPUT}}
-      #     asset_name: ${{env.PROJECT_NAME}}-${{github.run_number}}.zip
-      #     asset_content_type: application/zip
-      #
-      - name: Upload binaries to release
-        uses: svenstaro/upload-release-action@v2
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
         with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ${{ steps.release-id.outputs.upload_url }}
-          asset_name: v1
-          tag: ${{ github.ref }}
-          overwrite: true
-          body: "This is my release text"
-
+          upload_url: ${{ steps.get_release.outputs.upload_url }}
+          asset_path: ${{env.FILE_OUTPUT}}/${{env.PROJECT_NAME}}.zip 
+          asset_name: ${{env.PROJECT_NAME}}-v1.zip
+          asset_content_type: application/zip
