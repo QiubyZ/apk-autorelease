@@ -18,7 +18,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           tag_name: v1
-          name: Release v1
+          name: v1
           files: ./apk-autorelease.zip
           draft: false
           prerelease: false
