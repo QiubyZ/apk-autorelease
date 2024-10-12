@@ -1,4 +1,4 @@
-name: Release Action
+name: Release v1
 
 on:
   push:
@@ -6,41 +6,27 @@ on:
 
 jobs:
   build:
-    env:
-      TAG: Release
-      PROJECT_NAME: ${{github.event.repository.name}}
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      FILE_OUTPUT: ./dist
-
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Check Directory
-        run: ls -la
+      - name: Zip Repository
+        run: zip -r apk-autorelease.zip . -x .git*
 
-      # ... (Langkah-langkah untuk membangun file ZIP Anda di direktori ./dist) 
-
-      - name: Upload Ke dalam Artifact
-        uses: actions/upload-artifact@v4
+      - name: Buat atau Update Tag dan Rilis
+        id: create_release
+        uses: actions/create-release@v1
         with:
-          name: ${{env.PROJECT_NAME}}
-          path: ${{env.FILE_OUTPUT}}
-
-      - name: Dapatkan atau buat rilis
-        id: get_release
-        uses: ncipollo/release-action@v1
-        with:
-          allowUpdates: true # Izinkan pembaruan pada rilis yang sudah ada
-          tag: v1 # Gunakan tag "v1" secara konsisten
-          name: Release v1 # Nama rilis (bisa diubah sesuai keinginan)
+          tag_name: v1
+          release_name: Release v1
           draft: false
           prerelease: false
+          replace: true # Ganti tag yang sudah ada
 
       - name: Upload Release Asset
         uses: actions/upload-release-asset@v1
         with:
-          upload_url: ${{ steps.get_release.outputs.upload_url }}
-          asset_path: ${{env.FILE_OUTPUT}}/${{env.PROJECT_NAME}}.zip 
-          asset_name: ${{env.PROJECT_NAME}}-v1.zip
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./apk-autorelease.zip
+          asset_name: apk-autorelease-v1.zip
           asset_content_type: application/zip
